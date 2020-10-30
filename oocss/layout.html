@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Testing OOCSS layout</title>
+
+<style type="text/css">
+.wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.inner {
+    padding: 1em;
+}
+
+.body {
+    flex-grow: 1;
+}
+
+.sidebar {
+    width: 25%;
+    min-width: 25%;
+}
+
+.thin {
+    width: 15%;
+    min-width: 15%;
+}
+
+/* Skins */
+.night {
+    background-image: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(5,5,82,1) 35%, rgba(134,2,123,1) 100%);
+    color: #fff;
+}
+
+.contained {
+    border: 1px solid red;
+    border-radius: 10px;
+}
+</style>
+
+</head>
+<body>
+
+<header class="mod contained">
+    <div class="inner">
+        <div class="hd"></div>
+        <div class="bd">
+            <h2>Header</h2>
+            <p>Donec a accumsan erat. Nullam sem sem, lobortis at luctus sed, imperdiet ut augue. Nulla congue sapien ut nulla facilisis, eget elementum ligula maximus. In ultrices velit sed dapibus bibendum. Cras nisi massa, convallis eu tellus ac, accumsan pharetra nunc. Etiam molestie ante et vulputate mattis.</p>
+        </div>
+        <div class="ft"></div>
+    </div>
+</header>
+
+<div class="wrapper">
+
+    <aside class="mod sidebar">
+        <div class="inner">
+            <div class="hd"></div>
+            <div class="bd">
+                <h2>Left Column</h2>
+                <p> Integer nisl turpis, rhoncus dignissim tincidunt non, tincidunt sagittis nunc. In fermentum aliquet imperdiet. Nulla vel pellentesque ipsum, ut iaculis felis.</p>
+            </div>
+            <div class="ft"></div>
+        </div>
+    </aside>
+
+    <main class="mod night">
+        <div class="inner">
+            <div class="hd"></div>
+            <div class="bd">
+                <h1>Main Content</h1>
+                <p>Sed egestas vestibulum interdum. Duis sagittis ac quam sed elementum. Quisque pulvinar neque nec dolor malesuada fringilla. Fusce vel purus sollicitudin enim facilisis consectetur. Maecenas euismod porta consectetur. Nulla vitae risus enim. Aenean at orci mattis, viverra eros vel, hendrerit tortor.</p>
+            </div>
+            <div class="ft"></div>
+        </div>
+    </main>
+
+    <aside class="mod sidebar">
+        <div class="inner">
+            <div class="hd"></div>
+            <div class="bd">
+                <h2>Right Column</h2>
+                <p>Sed ut quam dolor. Sed pellentesque tempus nisl, sed volutpat tortor hendrerit ut.</p>
+            </div>
+            <div class="ft"></div>
+        </div>
+    </aside>
+
+</div>
+
+<footer class="mod contained">
+    <div class="inner">
+        <div class="hd"></div>
+        <div class="bd">
+            <h2>Footer</h2>
+            <p>Vivamus euismod, metus ac suscipit convallis, felis velit malesuada velit, sed efficitur dolor diam et nisi. Proin in lobortis dui, ac pulvinar risus.</p>
+        </div>
+        <div class="ft"></div>
+    </div>
+</footer>
+
+</body>
+</html>

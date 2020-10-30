@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Testing OOCSS layout</title>
+
+<link rel="stylesheet" href="./bootstrap-grid.min.css">
+<style type="text/css">
+/* Generic */
+.mod { height: 100%; }
+.hd > :first-child,
+.bd > :first-child,
+.ft > :first-child { margin-top: 0; }
+.hd > :last-child,
+.bd > :last-child,
+.ft > :last-child { margin-bottom: 0; }
+.hd { margin-bottom: 1em; }
+.row { margin-top: 30px; margin-bottom: 30px; }
+.inner { padding: 1em; }
+
+/* Backgrounds */
+/* .night {
+    background-image: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(5,5,82,1) 35%, rgba(134,2,123,1) 100%);
+    color: #fff;
+}
+.metal {
+    background-image: linear-gradient(145deg, #cccccc, #acacac);
+} */
+
+
+/* Contours */
+/* .contained {
+    border: 1px solid #000;
+    border-radius: 10px;
+}
+
+.soft {
+    box-shadow: 0 5px 10px #000;
+} */
+
+
+.lip {
+    padding-left: 1em;
+    padding-right: 1em;
+    margin-left: -1em;
+    margin-right: -1em;
+}
+
+.round {
+    border-radius: 10px;
+    box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.25);
+}
+
+.round-sm {
+    border-radius: 0.5em;
+    box-shadow: 0 0.25em 0.5em rgba(0, 0, 0, 0.25);
+}
+
+.box {
+    border: 1px solid #ccc;
+    background-image: linear-gradient(to top, #efefef, #fff 50%);
+}
+
+.box > .inner > .hd:not(:empty) {
+    padding-bottom: 1em;
+    border-bottom: 1px solid #ccc;
+}
+
+.paper {
+    background-color: #D9B791;
+    background-image:
+        url("./wing-1.png"),
+        url("./wing-2.png"),
+        url("./paper.jpg");
+    background-repeat:
+        no-repeat,
+        no-repeat,
+        repeat;
+    background-position:
+        bottom 10px left 10px,
+        bottom 10px right 10px,
+        0 0;
+    border: 1px solid #9F8D65;
+    padding-bottom: 60px;
+}
+
+.btn {
+    border: 2px solid #fff;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.btn:active {
+    box-shadow: none;
+}
+
+.btn-blue {
+    background-image: linear-gradient(to bottom, #0ff, #0bb);
+    color: #fff;
+}
+
+.btn-blue:hover,
+.btn-blue:focus {
+    background-image: linear-gradient(to bottom, #0bb, #0bb);
+}
+
+.btn-blue:active {
+    background-image: linear-gradient(to bottom, #0bb, #0ff);
+}
+
+.btn-black {
+    background-image: linear-gradient(to bottom, #333, #000);
+    color: #fff;
+}
+
+.btn-black:hover,
+.btn-black:focus {
+    background-image: linear-gradient(to bottom, #000, #000);
+}
+
+.btn-black:active {
+    background-image: linear-gradient(to bottom, #000, #333);
+}
+
+.btn-small {
+    padding: 0.25em 0.5em;
+}
+
+.btn-mid {
+    padding: 0.5em 1em;
+}
+
+.btn-large {
+    padding: 1em 2em;
+}
+
+.article {
+    border-bottom: 1px solid #900;
+    background-color: #eee;
+    padding-bottom: 1em;
+    padding: 1em;
+    margin-bottom: 1em;
+}
+
+.article > .inner {
+    padding: 0;
+}
+
+.article > .inner > .ft {
+    text-align: right;
+}
+
+.article > .inner > .hd {
+    margin-bottom: 0;
+}
+
+.footer {
+    font-size: 0.8em;
+}
+
+.bulletless {
+    list-style-type: none;
+    padding: 0;
+}
+
+.nav {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.nav > li > a {
+    text-transform: uppercase;
+    color: #900;
+    text-decoration: none;
+    display: inline-block;
+    width: 100%;
+    padding: 0.5em 0;
+    border-bottom: 1px solid #900;
+}
+
+.nav > li > a:hover {
+    background-color: #900;
+    color: #fff;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col">
+            <header class="mod box round">
+                <div class="inner">
+                    <!-- <div class="hd"></div> -->
+                    <div class="bd">
+                        <h2>Header</h2>
+                        <nav>
+                            <ul class="bulletless row nav">
+                                <li class="col-sm"><a href="#">Lorem</a></li>
+                                <li class="col-sm"><a href="#">Ipsum</a></li>
+                                <li class="col-sm"><a href="#">Dolor</a></li>
+                                <li class="col-sm"><a href="#">Sit</a></li>
+                                <li class="col-sm"><a href="#">Amet</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <!-- <div class="ft"></div> -->
+                </div>
+            </header>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-3">
+            <aside class="mod box">
+                <div class="inner">
+                    <div class="hd lip">
+                        <h2>Left Column</h2>
+                    </div>
+                    <div class="bd">
+                        <ul>
+                            <li><a href="#">Lorem</a></li>
+                            <li><a href="#">Integer nisl</a></li>
+                            <li><a href="#">Vestibulum</a></li>
+                            <li><a href="#">Quisque pulvinar</a></li>
+                        </ul>
+                    </div>
+                    <!-- <div class="ft"></div> -->
+                </div>
+            </aside>
+        </div>
+
+        <div class="col">
+            <main class="mod box round">
+                <div class="inner">
+                    <!-- <div class="hd"></div> -->
+                    <div class="bd">
+
+                        <h1>Main Content</h1>
+                        <p>Sed egestas vestibulum interdum. Duis sagittis ac quam sed elementum. Quisque pulvinar neque nec dolor malesuada fringilla. Fusce vel purus sollicitudin enim facilisis consectetur. Maecenas euismod porta consectetur. Nulla vitae risus enim. Aenean at orci mattis, viverra eros vel, hendrerit tortor.</p>
+
+                        <article class="mod paper">
+                            <div class="inner">
+                                <div class="hd">
+                                    <h2>Integer nisl turpis</h2>
+                                </div>
+                                <div class="bd">
+                                    <p>Rhoncus dignissim tincidunt non, tincidunt sagittis nunc. In fermentum aliquet imperdiet. Nulla vel pellentesque ipsum, ut iaculis felis.</p>
+                                </div>
+                            </div>
+                        </article>
+
+                        <p>Etiam molestie ante et vulputate mattis.</p>
+                        <p><a href="#" class="btn btn-blue btn-mid round-sm">Read more</a></p>
+
+                    </div>
+                    <div class="ft"></div>
+                </div>
+            </main>
+        </div>
+
+        <div class="col-3">
+            <aside class="mod box">
+                <div class="inner">
+                    <div class="hd lip">
+                        <h2>Right Column</h2>
+                    </div>
+                    <div class="bd">
+                        <p>Sed ut quam dolor. Sed pellentesque tempus nisl, sed volutpat tortor hendrerit ut.</p>
+
+                        <div class="mod article">
+                            <div class="inner">
+                                <div class="hd">
+                                    <h3>Quisque pulvinar</h3>
+                                </div>
+                                <div class="bd">
+                                    <p>Neque nec dolor malesuada fringilla</p>
+                                </div>
+                                <div class="ft">
+                                    <a href="#">Read more</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mod article">
+                            <div class="inner">
+                                <div class="hd">
+                                    <h3>Quisque pulvinar</h3>
+                                </div>
+                                <div class="bd">
+                                    <p>Neque nec dolor malesuada fringilla</p>
+                                </div>
+                                <div class="ft">
+                                    <a href="#">Read more</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- <div class="ft"></div> -->
+                </div>
+            </aside>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <footer class="mod box footer">
+                <div class="inner">
+                    <!-- <div class="hd"></div> -->
+                    <div class="bd">
+                        <h2>Footer</h2>
+                        <p>Vivamus euismod, metus ac suscipit convallis, felis velit malesuada velit, sed efficitur dolor diam et nisi. Proin in lobortis dui, ac pulvinar risus.</p>
+                    </div>
+                    <!-- <div class="ft"></div> -->
+                </div>
+            </footer>
+        </div>
+    </div>
+
+</div>
+
+<script>
+document.body.addEventListener("click", function (e) {
+
+    if (e.target.matches("a[href=\"#\"]")) {
+        e.preventDefault();
+    }
+
+});
+</script>
+
+</body>
+</html>

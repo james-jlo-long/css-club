@@ -1,0 +1,974 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1, width=device-width">
+<title>OOCSS</title>
+
+<link rel="stylesheet" href="../reveal/css/reveal.css">
+<link rel="stylesheet" href="../reveal/css/theme/black.css">
+<link rel="stylesheet" href="../reveal/lib/css/zenburn.css">
+<!-- <link rel="stylesheet" href="./custom.css"> -->
+<link rel="stylesheet" href="../reveal/css/print/pdf.css" media="print">
+<style>
+.cols {
+    display: flex;
+    flex-direction: row;
+}
+
+.col {
+    width: 50%;
+}
+</style>
+
+</head>
+<body>
+
+<div class="reveal">
+    <div class="slides">
+
+<section>
+
+    <h1>Upgrade Your CSS</h1>
+    <p>Part 1: OOCSS</p>
+
+    <aside class="notes">
+        <p>This is a series where I'll show you how to improve your CSS skills.</p>
+    </aside>
+
+</section>
+
+<section>
+
+    <section>
+        <h2>The problem with CSS</h2>
+        <p>No-one learns it before they start using it.</p>
+    </section>
+
+    <section>
+        <h3>You don't need to be an expert to get started</h3>
+        <p>Developers will do something bad, but it works, so they just keep using it.</p>
+    </section>
+
+    <section>
+
+        <h3>File sizes keep getting bigger</h3>
+        <p>Larger files mean slower websites.</p>
+        <p>Larger files take more bandwidth - some users have limited data plans on 4G.</p>
+
+        <div class="fragment">
+            <ul>
+                <li>Xigen site: 21KB</li>
+                <li>Jacksons M1: 73.5KB</li>
+                <li>Epson: 112KB + 33KB (145KB)</li>
+            </ul>
+        </div>
+
+        <aside class="notes">
+            <p>Limited plans makes users reluctant to use their phones on-to-go.</p>
+            <p>That keeps customers away from our ecommerce stores.</p>
+        </aside>
+
+    </section>
+
+    <section>
+
+        <p>We can't rely on a minifier like we can with JavaScript.</p>
+
+        <pre><code class="js" data-trim>
+var myLongVariableName = 1 + 2 + 3 + 4;
+
+// minifies to:
+var a=10;
+        </code></pre>
+
+        <p>CSS can't really minify by much.</p>
+
+        <pre><code class="css" data-trim>
+.my-long-class-name {
+    text-decoration: underline;
+}
+
+/* Minifies to: */
+.my-long-class-name{text-decoration:underline}
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h3>Code re-use is almost non existent</h3>
+        <p>When we want to add a new section, we add new styles.</p>
+        <p>The file size just keeps getting bigger and bigger.</p>
+        <p class="fragment">CSS classes are designed to be re-used, even on the same page.</p>
+    </section>
+
+    <section>
+        <h3>Code is too fragile</h3>
+        <p>Changing one thing can have huge consequences. <br>Unknown consequences.</p>
+    </section>
+
+    <section>
+
+        <h3>We try to improve wrong part</h3>
+        <p>We developers worry about our styles looking the same in every browser.</p>
+
+        <pre><code class="css" data-trim>
+        ul { /* ... */ }
+     ul li { /* ... */ }
+   ul li a { /* ... */ }
+/*         |-----------| */
+        </code></pre>
+
+        <div class="fragment">
+            <p>But the architecture lives here.</p>
+            <pre><code class="css" data-trim>
+        ul { /* ... */ }
+     ul li { /* ... */ }
+   ul li a { /* ... */ }
+/* |-----|               */
+            </code></pre>
+        </div>
+
+        <aside class="notes">
+            <p>If you don't get the architecture right, you will have CSS bloat.</p>
+        </aside>
+
+    </section>
+
+</section>
+
+<section>
+
+    <section>
+        <h2>Then someone has a good idea</h2>
+    </section>
+
+    <section>
+        <p><q>Hey, we should split our CSS source into different files.</q> - <em>Someone</em></p>
+        <p class="fragment">... but they don't fully explain it.</p>
+        <p class="fragment">So now we don't know what's in all our source files, so we don't know what's in the final CSS file.</p>
+        <p class="fragment">Same problem as before - we keep adding new styles for new sections, we keep adding to the file size.</p>
+    </section>
+
+    <section>
+
+        <p><q>Hey, we should use BEM.</q> - <em>Someone</em></p>
+        <p class="fragment">We still haven't learned architecture, we just hide bad architecture with good class names.</p>
+
+        <aside class="notes">
+            <p>There's nothing wrong with separating source files or using BEM. It's just not the only thing to learn.</p>
+        </aside>
+
+    </section>
+
+</section>
+
+<section>
+
+    <section>
+        <h2>There is a better way</h2>
+    </section>
+
+    <section>
+
+        <p>Actually there are a few better ways.</p>
+        <div class="fragment">
+            <p>I'm going to concentrate on 3 of them.</p>
+            <ul>
+                <li>OOCSS</li>
+                <li>SMACSS</li>
+                <li>ITCSS</li>
+            </ul>
+        </div>
+
+        <aside class="notes">
+            <p>Has anyone ever heard of any of these?</p>
+            <p>They are all approaches to organising CSS.</p>
+        </aside>
+
+    </section>
+
+    <section>
+        <p>I'm not going to worry about techniques like Flexbox or CSS grid.</p>
+        <p class="fragment">These techniques will change and <a href="https://css-tricks.com/" target="_blank" rel="noopener noreferrer">CSS-Tricks</a> does it better.</p>
+    </section>
+
+    <section>
+        <p>Instead, I'm going to show you how to organise your files and how to write better CSS.</p>
+        <p class="fragment">As CSS techniques change and browser support improves, you'll see what you can upgrade.</p>
+    </section>
+
+</section>
+
+<section>
+
+    <section>
+        <h2>OOCSS</h2>
+    </section>
+
+    <section>
+
+        <p>Stands for Object-Oriented Cascading Style Sheets.</p>
+        <p>Created by <a href="https://twitter.com/stubbornella" target="_blank" rel="noopener noreferrer">Nicole Sullivan</a> in 2008 or 2009</p>
+        <p class="fragment">To put that date in perspective:</p>
+        <p class="fragment"><q>When can we stop supporting IE6?</q> - <em>Us in 2009</em></p>
+        <p class="fragment"><q>So an iPhone is just an iPod with a built in phone?</q> - <em>Also us in 2009</em></p>
+        <p class="fragment"><q>SASS is just too confusing, it's not practicle for the web.</q> - <em>Us again in 2009</em></p>
+
+        <aside class="notes">
+            <p>CSS may have moved on. I think OOCSS holds up, but the other approaches came later and may fit better.</p>
+            <p>SASS and SCSS are different things - google it and be amazed.</p>
+        </aside>
+
+    </section>
+
+    <section>
+        <h2>The goal of OOCSS</h2>
+        <ul>
+            <li>Reduce HTTP requests.</li>
+            <li>Reduce size of images.</li>
+            <li>Reduce size of CSS files.</li>
+        </ul>
+        <p>The aim is to create a series of smaller classes that can be re-used in as many places as possible.</p>
+    </section>
+
+    <section>
+
+        <p>If you do this right, you can add new sections to the website without having to add any more styles.</p>
+        <div class="fragment">
+            <p><img src="./lego.jpg" alt="Lego bricks"></p>
+            <p>Just like you can create new models without having to buy new Lego bricks.</p>
+        </div>
+
+    </section>
+
+    <section>
+
+        <p><a href="./layout-2.html" target="_blank" rel="noopener noreferrer">Demonstration</a></p>
+
+        <aside class="notes">
+            <p>The left column can change size, the main column adjusts to fit.</p>
+            <p>The main column can have "box" and "paper" swapped over.</p>
+            <p>We can add articles to the header or footer.</p>
+        </aside>
+
+    </section>
+
+    <section>
+
+        <p>OOCSS does this using two core principles:</p>
+        <ol>
+            <li>Separate content from container</li>
+            <li>Separate skin from structure</li>
+        </ol>
+
+    </section>
+
+</section>
+
+<section>
+
+    <section>
+        <h2>Separate content from container</h2>
+    </section>
+
+    <section>
+
+        <p>Write modules to take up the full width. Width is defined by the container, height is defined by the content.</p>
+        <p class="fragment">If you've ever used a grid system, you've used this principle.</p>
+
+        <aside class="notes">
+            <p>OOCSS created grid systems.</p>
+        </aside>
+
+    </section>
+
+    <section>
+
+        <pre><code class="html" data-trim>
+&lt;-- Here's the container --&gt;
+&lt;div class="row"&gt;
+    &lt;div class="col"&gt;
+        &lt;-- Your content goes here --&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+        </code></pre>
+
+        <pre class="fragment"><code class="html" data-trim>
+&lt;-- The content shrinks with something beside it --&gt;
+&lt;div class="row"&gt;
+    &lt;div class="col"&gt;
+        &lt;-- Your content goes here --&gt;
+    &lt;/div&gt;
+    &lt;div class="col-2"&gt;
+        &lt;-- Something --&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+        </code></pre>
+
+        <aside class="notes">
+            <p>The "col" class isn't a typo, it means "use the rest of the space".</p>
+        </aside>
+
+    </section>
+
+    <section>
+
+        <p>The CSS is really easy, because HTML works like this anyway. If we don't set a width, it'll be the same as <code>width: 100%</code>.</p>
+
+        <pre><code class="css" data-trim>
+.content {
+    border: 1px solid #000;
+    padding: 1em;
+    /* width: 900px; */
+}
+        </code></pre>
+
+    </section>
+
+    <section>
+
+        <p>The difficulty comes in applying this principle. Not because it's hard, but because developers don't think to do it.</p>
+        <p class="fragment"><em>Always</em> separate content from container.</p>
+        <p class="fragment">If you have 2 things next to each other, put them in a grid.</p>
+
+    </section>
+
+    <section>
+
+        <p>If it's simple, you may not need the full grid system.</p>
+        <p>For example, the "media object" puts content next to an image.</p>
+        <pre><code class="html" data-trim>
+&lt;div class="media"&gt;
+    &lt;div class="media__image"&gt;
+        &lt;img src="..." alt="..."&gt;
+    &lt;/div&gt;
+    &lt;div class="media__body"&gt;
+        &lt;p&gt;Lorem ipsum dolor sit amet ...&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+        </code></pre>
+
+        <aside class="notes">
+            <p>Has anyone ever heard of the media object?</p>
+        </aside>
+
+    </section>
+
+    <section>
+
+        <p>In 2009, the CSS looked like this:</p>
+        <pre><code class="css" data-trim>
+.media { margin:10px; }
+.media__body { overflow:hidden; _overflow:visible; zoom:1; }
+.media__image { float:left; margin-right: 10px; }
+.media__image img { display:block; }
+        </code></pre>
+
+        <div class="fragment">
+
+            <p>These days, the code is even easier.</p>
+
+            <pre><code class="css" data-trim>
+.media { display:flex; flex-flow:row nowrap; margin:10px; }
+.media__image { margin-right:10px; }
+.media__image &gt; img { display:block; }
+            </code></pre>
+
+        </div>
+
+        <aside class="notes">
+            <p>This is something that we can upgrade when browser support updated.</p>
+        </aside>
+
+    </section>
+
+    <section>
+        <p>Nicole Sullivan and her team were tasked with helping Facebook stream-line their website.</p>
+        <p>After some research, she noticed that the entire site was built from "image next to text".</p>
+        <p>Implementing the media object saved Facebook hundreds of lines of code.</p>
+    </section>
+
+    <section>
+
+        <p><a href="http://www.stubbornella.org/content/2010/06/25/the-media-object-saves-hundreds-of-lines-of-code/" target="_blank" rel="noopener noreferrer">The media object saves hundreds of lines of code</a></p>
+        <p><img src="./facebook-image-block.png" alt="Facebook screen showing the media object being used"></p>
+
+        <aside class="notes">
+            <p>In the blog post, Sullivan goes into more detail like explaining an optional image on the right.</p>
+        </aside>
+
+    </section>
+
+    <section>
+
+        <p>The media object can be in the sidebar or the main section and continues to work. It can even be nested.</p>
+
+        <div class="fragment">
+
+            <p>The golden rule of separating content from container: don't write compound selectors.</p>
+
+            <pre><code class="css" data-trim>
+/* Don't */
+.sidebar .module { /* ... */ }
+
+/* Do */
+.module { /* ... */ }
+            </code></pre>
+
+        </div>
+
+        <p class="fragment">This is also why nesting selectors is a bad idea.</p>
+
+        <aside class="notes">
+            <p>I should be able to pick up a module you've written and place it anywhere on the page - it should still work.</p>
+        </aside>
+
+    </section>
+
+</section>
+
+<section>
+
+    <section>
+        <h2>Separate skin from structure</h2>
+    </section>
+
+    <section>
+
+        <p>In front-end terms:</p>
+
+        <dl>
+            <dt>Skin</dt>
+            <dd>The parts of the UI that people would think of, like <code>border</code>, <code>background</code>, <code>color</code> or <code>font</code></dd>
+            <dt>Structure</dt>
+            <dd>The markup and the "invisible" parts, like <code>padding</code>, <code>margin</code>, <code>display</code> or <code>position</code>.</dd>
+        </dl>
+
+        <p class="fragment">Separate these into different classes, then mix-and-match to make your website.</p>
+
+    </section>
+
+    <section>
+
+        <p>If you've ever used <a href="https://getbootstrap.com/docs/4.0/components/buttons/" target="_blank" rel="noopener noreferrer">Bootstrap buttons</a> then you've seen this mentality before.</p>
+
+        <ul>
+            <li>
+                <p>The base button has a "btn" class.</p>
+                <pre><code class="html" data-trim>
+&lt;button type="button" class="btn"&gt;@&lt;/button&gt;
+                </code></pre>
+            </li>
+            <li class="fragment">
+                <p>You set the button's colour using classes like "btn-primary" or "btn-success"</p>
+                <pre><code class="html" data-trim>
+&lt;button type="button" class="btn btn-info"&gt;@&lt;/button&gt;
+                </code></pre>
+            </li>
+            <li class="fragment">
+                <p>You set the button's size using classes like "btn-sm" or "btn-lg"</p>
+                <pre><code class="html" data-trim>
+&lt;button type="button" class="btn btn-lg"&gt;@&lt;/button&gt;
+                </code></pre>
+            </li>
+        </ul>
+
+    </section>
+
+    <section>
+
+        <p>You can use these classes on any element because Bootstrap doesn't quality its selectors with the node names.</p>
+
+        <div class="fragment">
+            <p>These three elements will look the same.</p>
+            <pre><code class="html" data-trim>
+&lt;button type="button" class="btn btn-primary"&gt;@&lt;/button&gt;
+&lt;a href="#" class="btn btn-primary"&gt;@&lt;/a&gt;
+&lt;span class="btn btn-primary"&gt;@&lt;/span&gt;
+            </code></pre>
+        </div>
+
+    </section>
+
+    <section>
+
+        <p>Golden rule of separating skin from structure: never quality your selectors.</p>
+
+        <pre><code class="css" data-trim>
+/* Don't */
+a.btn { /* ... */ }
+
+/* Do */
+.btn { /* ... */ }
+        </code></pre>
+
+    </section>
+
+    <section>
+
+        <p>The HTML itself should only define the semantic parts of the website.</p>
+        <p class="fragment">It is likely to change for SEO or accessibility reasons.</p>
+        <p class="fragment">By default, CSS doesn't care. But if you don't separate the style from the structure, it will.</p>
+
+        <aside class="notes">
+            <p>You never want to think "h5 is smaller than h2 so I'll use that".</p>
+        </aside>
+
+    </section>
+
+    <section>
+
+        <p>Accessibility person: this should be an <code>&lt;h4&gt;</code> to better fit the page structure</p>
+        <pre><code class="html" data-trim>
+&lt;aside class="sidebar"&gt;
+    &lt;h3&gt;Related articles&lt;/h3&gt;
+&lt;/aside&gt;
+        </code></pre>
+        <p>You: 😢</p>
+        <pre><code class="css" data-trim>
+.sidebar h3 { /* ... */ }
+.sidebar h4 { /* ... */ }
+        </code></pre>
+
+    </section>
+
+    <section>
+
+        <p>Accessibility person: <code>&lt;h4&gt;</code> me, bro!</p>
+        <pre><code class="html" data-trim>
+&lt;aside class="sidebar"&gt;
+    &lt;h3&gt;Related articles&lt;/h3&gt;
+&lt;/aside&gt;
+        </code></pre>
+        <p>You: 😉</p>
+        <pre><code class="css" data-trim>
+h1, .h1 { /* ... */ }
+h2, .h2 { /* ... */ }
+h3, .h3 { /* ... */ }
+        </code></pre>
+        <pre><code class="html" data-trim>
+&lt;aside class="sidebar"&gt;
+    &lt;h4 class="h3"&gt;Related articles&lt;/h4&gt;
+&lt;/aside&gt;
+        </code></pre>
+
+    </section>
+
+    <section>
+
+        <p>Something else that would have worked is this:</p>
+
+        <pre><code class="css" data-trim>
+.sidebar__heading { /* ... */ }
+        </code></pre>
+
+        <p>But that can be problematic. You can end up defining fonts all over the place.</p>
+
+        <p>A quick tool to check for that is <code>grep</code></p>
+        <pre><code class="bash" data-trim>
+grep -o 'font-family' /path/to/compiled.css | wc -l
+# Should be less than 10
+        </code></pre>
+
+    </section>
+
+    <section>
+
+        <p>Nicole Sullivan tested the top 1000 websites in 2009.</p>
+
+        <div class="fragment">
+            <p>Here are the results for <code>font-family</code></p>
+            <ul>
+                <li>The worse had 511 rules.</li>
+                <li>56% had more than 10.</li>
+                <li>9% had more than 100.</li>
+            </ul>
+        </div>
+
+        <div class="fragment">
+            <p>Here are the results for <code>font-size</code></p>
+            <ul>
+                <li>The worse had 889 size rules.</li>
+                <li>78% had more than 10.</li>
+                <li>23% had more than 100.</li>
+            </ul>
+        </div>
+        <p class="fragment">There aren't that many usable font sizes on the web.</p>
+
+    </section>
+
+    <section>
+
+        <p>Other things worth grepping for and trying to reduce as much as possible (less than 10 preferably).</p>
+        <ul>
+            <li><code>display</code> - You probably need a grid system or media object.</li>
+            <li><code>padding</code> or <code>margin</code> - Do you need that many structures?</li>
+            <li><code>background</code> - <code>background</code> is a skin - why have so many of them?</li>
+            <li><code>color</code> - You probably don't need that many colours on your website.</li>
+        </ul>
+
+    </section>
+
+    <section>
+
+        <p>Nicole Sullivan took this one step further by creating the Module Object.</p>
+        <p>Consistent markup with common class names that could be easily skinned.</p>
+
+        <pre><code class="html" data-trim>
+&lt;div class="mod"&gt;
+    &lt;div class="inner"&gt;
+        &lt;div class="hd"&gt;head&lt;/div&gt;
+        &lt;div class="bd"&gt;body&lt;/div&gt;
+        &lt;div class="ft"&gt;foot&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+        </code></pre>
+
+    </section>
+
+    <section>
+
+        <p>The code could be easily modified to be anything it needed to be.</p>
+        <p>For example, a modal dialog box would look like this:</p>
+
+        <pre><code class="html" data-trim>
+&lt;aside class="mod modal" role="dialog" aria-modal="true"&gt;
+    &lt;div class="inner"&gt;
+        &lt;div class="hd"&gt;
+            &lt;h3&gt;Lorem ipsum&lt;/h3&gt;
+            &lt;button type="button"&gt;Close&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class="bd"&gt;
+            &lt;p&gt;Content ...&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="ft"&gt;
+            &lt;button type="button"&gt;OK&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/aside&gt;
+        </code></pre>
+
+        <aside class="notes">
+            <p>Here the <code>.popup</code> would be the background and the <code>.inner</code> would be the modal content.</p>
+        </aisde>
+
+    </section>
+
+    <section>
+
+        <p>A simple disclosure widget would look like this:</p>
+
+        <pre><code class="html" data-trim>
+&lt;div class="mod disclose"&gt;
+    &lt;details class="inner"&gt;
+        &lt;summary class="hd"&gt;Question?&lt;/summary&gt;
+        &lt;div class="bd"&gt;
+            &lt;p&gt;Answer ...&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/details&gt;
+&lt;/div&gt;
+        </code></pre>
+
+        <p class="fragment">Can you see how the <strong>structure</strong> has changed but the <strong>skin</strong> doesn't need to?</p>
+
+    </section>
+
+    <section>
+
+        <p>There was also a more complicated version that allowed advanced things like rounded corners (before <code>border-radius</code> existed).</p>
+
+        <pre><code class="html" data-trim>
+&lt;div class="mod complex"&gt;
+    &lt;b class="top"&gt;
+        &lt;b class="tl"&gt;&lt;/b&gt;&lt;b class="tr"&gt;&lt;/b&gt;
+    &lt;/b&gt;
+    &lt;div class="inner"&gt;
+        &lt;div class="bd"&gt;
+            &lt;p&gt;Lorem ipsum.&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;b class="bottom"&gt;
+        &lt;b class="bl"&gt;&lt;/b&gt;&lt;b class="br"&gt;&lt;/b&gt;
+    &lt;/b&gt;
+&lt;/div&gt;
+        </code></pre>
+
+        <aside class="notes">
+            <p>Consistent markup means that you don't have to style elements, just the classes.</p>
+        </aside>
+
+    </section>
+
+</section>
+
+<section>
+
+    <section>
+        <h2>Practicle Examples</h2>
+    </section>
+
+    <section>
+
+        <p>The best time to work out the CSS objects is when you look at the design.</p>
+        <div class="fragment">
+            <p>Ryan's idea of breaking down the Advanced Custom Fields is an amazing starting point.</p>
+            <img src="./acf.jpg" alt="Ryan's Advnaced Custom Fields breakdown">
+        </div>
+
+    </section>
+
+    <section>
+
+        <h2>Centred text</h2>
+
+        <div class="cols">
+            <div class="col">
+                <img src="./centre-hv.jpg" alt="Hero images">
+            </div>
+            <div class="col">
+                <img src="./centre-hv-2.jpg" alt="A taller hero image">
+            </div>
+        </div>
+
+        <div class="cols">
+            <div class="col fragment">
+                <p>What we know:</p>
+                <ul>
+                    <li>Content can change.</li>
+                    <li>Text should be text.</li>
+                </ul>
+            </div>
+            <div class="col fragment">
+                <p>What we don't know:</p>
+                <ul>
+                    <li>The height and width.</li>
+                </ul>
+            </div>
+        </div>
+
+        <aside class="notes">
+            <p>It turns out that this is <em>really</em> easy.</p>
+        </aside>
+
+    </section>
+
+    <section>
+
+        <pre><code class="css" data-trim>
+.center-hv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+        </code></pre>
+        <pre><code class="html" data-trim>
+&lt;div class="hero"&gt;&lt;!-- background image here --&gt;
+    &lt;div class="center-hv"&gt;
+        &lt;div class="center-hv__inner"&gt;
+            &lt;h1&gt;Lorem Ipsum&lt;/h1&gt;
+            &lt;p&gt;Donec a accumsan erat ...&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+        </code></pre>
+
+        <aside class="notes">
+            <p>This would go inside the hero element - the element that has the background image.</p>
+            <p>The <code>&lt;p&gt;</code>is optional.</p>
+            <p>The <code>center-hv__inner</code> elemens just stops the content being affected by <code>display:flex;</code>.</p>
+        </aside>
+
+    </section>
+
+    <section>
+
+        <h2>Sunken text</h2>
+
+        <div class="cols">
+            <div class="col">
+                <img src="./sunken-1.jpg" alt="The 'latest news' section">
+            </div>
+            <div class="col">
+                <img src="./sunken-2.jpg" alt="The 'our people' section">
+            </div>
+        </div>
+
+        <div class="cols">
+            <div class="col fragment">
+                <p>What we know:</p>
+                <ul>
+                    <li>The sunken text contain must shrink to fit.</li>
+                </ul>
+            </div>
+            <div class="col fragment">
+                <p>What we don't know:</p>
+                <ul>
+                    <li>The width.</li>
+                    <li>The size of the image.</li>
+                </ul>
+            </div>
+        </div>
+
+    </section>
+
+    <section>
+
+        <pre><code class="css" data-trim>
+.sunken__inner {
+    margin-top: -30px;
+    display: inline-block;
+    max-width: 50%;
+}
+        </code></pre>
+        <pre><code class="html" data-trim>
+&lt;div class="sunken"&gt;
+    &lt;img src="..." alt="..."&gt;
+    &lt;div class="sunken__inner"&gt;
+        &lt;p&gt;Donec a accumsan erat.&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+        </code></pre>
+
+        <aside class="notes">
+            <p>This shows that a module or component may have smaller CSS objects inside it.</p>
+            <p>If the news listing section has a "sunken" object and is laid out using a grid system, you don't need any other styles.</p>
+        </aside>
+
+    </section>
+
+
+</section>
+
+
+<section>
+
+    <section>
+        <h2>Tips for implementing OOCSS</h2>
+    </section>
+<!-- https://docs.google.com/document/d/1L6jPHeb6WvqlCU-FnQ_uixHjlur19WA66eaikUwqypU/edit -->
+    <section>
+
+        <h3>Granulate your skin</h3>
+        <p>When you're looking at backgrounds and borders, consider separating them out.</p>
+
+        <div class="fragment">
+            <p>In the demonstration I showed you, I had 2 classes:</p>
+            <ul>
+                <li><code>box</code> created a white box with a grey border and grey gradient at the bottom.</li>
+                <li><code>round</code> created rounded corners and a drop shadown.</li>
+            </ul>
+            <p>Check the design - can we split up things like that?</p>
+        </div>
+
+        <aside class="notes">
+            <p>Don't do it if you don't have to. We can always do it later if we need to.</p>
+            <p>The best time to do this is when we're looking for ACF groups.</p>
+        </aside>
+
+    </section>
+
+    <section>
+
+        <h3>Remember that a CSS object is smaller than a PHP file.</h3>
+        <p>It's very tempting to give all the elements in this PHP file classes that start with the same name ...</p>
+        <div class="fragment">
+            <p><img src="./itsatrap2.jpg" alt="Admiral Ackbar exclaiming 'It's a trap' from Return of the Jedi"></p>
+            <p>Your PHP file probably has a few CSS objects in it.</p>
+        </div>
+
+        <aside class="notes">
+            <p>We've probably already written some of those CSS objects.</p>
+        </aside>
+
+    </section>
+
+    <section>
+
+        <h3>Avoid the specificity wars</h3>
+        <p>Try to keep your selectors small and easy to override otherwise ...</p>
+        <ul>
+            <li class="fragment"><code>h3</code></li>
+            <li class="fragment"><code>.my-title</code></li>
+            <li class="fragment"><code>.container h3</code></li>
+            <li class="fragment"><code>.wrapper .module h3</code></li>
+            <li class="fragment"><code>#holder h3</code></li>
+            <li class="fragment"><code>{ !important }</code></li>
+            <li class="fragment"><code>#holder h3 { !important }</code></li>
+        </ul>
+
+        <aside class="notes">
+            <p>Don't use <code>!important</code> - once it's in, you'll never get it back out.</p>
+        </aside>
+
+    </section>
+
+    <section>
+
+        <blockquote>
+            <p>JavaScript doesn't suck, you're just doing it wrong.</p>
+            <cite>Douglas Crockford</cite>
+        </blockquote>
+
+        <blockquote class="fragment">
+            <p><del>JavaScript</del> <ins>CSS</ins> doesn't suck, you're just doing it wrong.</p>
+            <cite><del>Douglas Crockford</del> <ins>Nicole Sullivan</ins></cite>
+        </blockquote>
+
+    </section>
+
+</section>
+
+<!-- <section>
+
+    <section>
+        <h2>Next week</h2>
+        <p>We look at SMACSS and its approach to oranising files and state-based styles.</p>
+    </section>
+
+</section> -->
+
+<section id="questions">
+    <h1>Any questions?</h1>
+</section>
+
+    </div>
+</div>
+
+
+
+<script src="../reveal/lib/js/head.min.js"></script>
+<script src="../reveal/js/reveal.js"></script>
+<script>
+Reveal.configure({
+    pdfSeparateFragments: false,
+    pdfMaxPagesPerSlide: 1
+});
+Reveal.initialize({
+    dependencies: [
+        // Speaker notes.
+        {
+            src: "../reveal/plugin/notes/notes.js",
+            async: true
+        },
+        // Syntax highlighting.
+        {
+            src: "../reveal/plugin/highlight/highlight.js",
+            async: true,
+            callback: function () {
+                hljs.initHighlightingOnLoad();
+            }
+        },
+        // PDF printing.
+        {
+            src: "../reveal/plugin/print-pdf/print-pdf.js",
+            async: true
+        }
+    ]
+});
+</script>
+
+</body>
+</html>

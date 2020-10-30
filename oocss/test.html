@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Testing OOCSS elements</title>
+
+<style type="text/css">
+.hero {
+    width: 1000px;
+    height: 400px;
+    background-image: radial-gradient(circle, #cfc, #9c9);
+    border: 1px dotted #000;
+}
+
+.centre-hv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+
+.sunken__inner {
+    margin-top: -30px;
+    background-color: pink;
+    display: inline-block;
+    max-width: 50%;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="hero">
+
+    <div class="centre-hv">
+        <div class="centre-hv__inner">
+            <h1>Lorem Ipsum</h1>
+            <p>Donec a accumsan erat. Nullam sem sem, lobortis at luctus sed, imperdiet ut augue.</p>
+        </div>
+    </div>
+
+</div>
+
+<div class="sunken">
+    <div class="hero"></div>
+    <div class="sunken__inner">
+        <p>Donec a accumsan erat. Nullam sem sem, lobortis at luctus sed, imperdiet ut augue. Nullam sem sem, lobortis at luctus sed, imperdiet ut augue.</p>
+    </div>
+</div>
+
+</body>
+</html>
