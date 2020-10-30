@@ -5,6 +5,8 @@ A series of lessons to improve existing CSS knowledge.
 ## Current Lessons
 
 - 01: [OOCSS](https://james-jlo-long.github.io/css-club/oocss/)
+- 02: SMACSS _(coming soon)_
+- 03: ITCSS _(coming soon)_
 
 ## Software Used
 
