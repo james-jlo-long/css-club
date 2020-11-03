@@ -34,7 +34,8 @@
     <p>Part 1: OOCSS</p>
 
     <aside class="notes">
-        <p>This is a series where I'll show you how to improve your CSS skills.</p>
+        <p>This is a series where I'll show you how to improve your CSS skills and organise your files.</p>
+        <p>Part 2 is ITCSS.</p>
     </aside>
 
 </section>
@@ -42,20 +43,13 @@
 <section>
 
     <section>
-        <h2>The problem with CSS</h2>
-        <p>No-one learns it before they start using it.</p>
-    </section>
-
-    <section>
-        <h3>You don't need to be an expert to get started</h3>
-        <p>Developers will do something bad, but it works, so they just keep using it.</p>
+        <h2>What problems do we have?</h2>
     </section>
 
     <section>
 
-        <h3>File sizes keep getting bigger</h3>
-        <p>Larger files mean slower websites.</p>
-        <p>Larger files take more bandwidth - some users have limited data plans on 4G.</p>
+        <h3>File sizes keep getting bigger and bigger</h3>
+        <p>Bigger files means longer downloads, slower websites and more data used.</p>
 
         <div class="fragment">
             <ul>
@@ -104,8 +98,14 @@ var a=10;
     </section>
 
     <section>
+
         <h3>Code is too fragile</h3>
         <p>Changing one thing can have huge consequences. <br>Unknown consequences.</p>
+
+        <aside class="notes">
+            <p>Because we don't know the other developer's mindset, we don't know what the styles would affect and where else they're used.</p>
+        </aside>
+
     </section>
 
     <section>
@@ -136,29 +136,10 @@ var a=10;
 
     </section>
 
-</section>
-
-<section>
-
-    <section>
-        <h2>Then someone has a good idea</h2>
-    </section>
-
-    <section>
-        <p><q>Hey, we should split our CSS source into different files.</q> - <em>Someone</em></p>
-        <p class="fragment">... but they don't fully explain it.</p>
-        <p class="fragment">So now we don't know what's in all our source files, so we don't know what's in the final CSS file.</p>
-        <p class="fragment">Same problem as before - we keep adding new styles for new sections, we keep adding to the file size.</p>
-    </section>
-
     <section>
 
-        <p><q>Hey, we should use BEM.</q> - <em>Someone</em></p>
-        <p class="fragment">We still haven't learned architecture, we just hide bad architecture with good class names.</p>
-
-        <aside class="notes">
-            <p>There's nothing wrong with separating source files or using BEM. It's just not the only thing to learn.</p>
-        </aside>
+        <h3>BEM won't help</h3>
+        <p>If we don't get the architecture right, we'll just have good class names hiding bad architecture.</p>
 
     </section>
 
@@ -213,7 +194,7 @@ var a=10;
         <p class="fragment">To put that date in perspective:</p>
         <p class="fragment"><q>When can we stop supporting IE6?</q> - <em>Us in 2009</em></p>
         <p class="fragment"><q>So an iPhone is just an iPod with a built in phone?</q> - <em>Also us in 2009</em></p>
-        <p class="fragment"><q>SASS is just too confusing, it's not practicle for the web.</q> - <em>Us again in 2009</em></p>
+        <p class="fragment"><q>SASS is just too confusing, it's not practical for the web.</q> - <em>Us again in 2009</em></p>
 
         <aside class="notes">
             <p>CSS may have moved on. I think OOCSS holds up, but the other approaches came later and may fit better.</p>
@@ -370,8 +351,8 @@ var a=10;
             <p>These days, the code is even easier.</p>
 
             <pre><code class="css" data-trim>
-.media { display:flex; flex-flow:row nowrap; margin:10px; }
-.media__image { margin-right:10px; }
+.media { display:flex; flex-flow:row nowrap; margin:10px;
+    gap:10px; }
 .media__image &gt; img { display:block; }
             </code></pre>
 
@@ -595,6 +576,10 @@ grep -o 'font-family' /path/to/compiled.css | wc -l
             </ul>
         </div>
         <p class="fragment">There aren't that many usable font sizes on the web.</p>
+
+        <aside class="notes">
+            <p>Anything less than 10 is unreadable, anything about 50 is too big. There's no point having 15 <em>and</em> 16.</p>
+        </aside>
 
     </section>
 
