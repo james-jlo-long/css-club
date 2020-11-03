@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1, width=device-width">
+<title>ITCSS</title>
+
+<link rel="stylesheet" href="../reveal/css/reveal.css">
+<link rel="stylesheet" href="../reveal/css/theme/black.css">
+<link rel="stylesheet" href="../reveal/lib/css/zenburn.css">
+<!-- <link rel="stylesheet" href="./custom.css"> -->
+<link rel="stylesheet" href="../reveal/css/print/pdf.css" media="print">
+<style>
+.small { font-size: 0.8em }
+.flip-book { position: relative;; }
+.flip-book > .fragment { position: absolute; left: 50%; top: 0; transform: translateX(-50%); }
+</style>
+
+</head>
+<body>
+
+<div class="reveal">
+    <div class="slides">
+
+<section>
+
+    <h1>Upgrade Your CSS</h1>
+    <p>Part 2: ITCSS</p>
+
+    <aside class="notes">
+        <p>This will be much more theory than code.</p>
+        <p>Stands for Inverted Triangle Cascading Style Sheets.</p>
+        <p>Anyone ever heard of it?</p>
+    </aside>
+
+</section>
+
+<section>
+
+    <section>
+        <h2>Problems with CSS</h2>
+    </section>
+
+    <section>
+
+        <dl>
+            <dt>Everything's global</dt>
+            <dd class="small">Something you write could affect another page; and another page could affect what you're writing.</dd>
+        </dl>
+        <dl class="fragment">
+            <dt>Very dependant on source order</dt>
+            <dd class="small">Generally, what's written last is what's applied, so we need to be careful about order of styles.</dd>
+        </dl>
+        <dl class="fragment">
+            <dt>Specificity can override source order</dt>
+            <dd class="small">It can be tricky to see what styles will be applied before they're on the page.</dd>
+        </dl>
+
+        <aside class="notes">
+            <p>ITCSS embraces these features and works with them.</p>
+        </aside>
+
+    </section>
+
+    <section>
+        <h2>Problems with Developers</h2>
+    </section>
+
+    <section>
+
+        <dl>
+            <dt>Varying code style</dt>
+            <dd class="small">Two things may look the same but work differently, or be written differently.</dd>
+            <dd class="small">A way of unifying coding style would be useful.</dd>
+        </dl>
+        <dl class="fragment">
+            <dt>Developers never write documentation</dt>
+            <dd class="small">If we all write to the same mentality then we shouldn't need it.</dd>
+        </dl>
+        <dl class="fragment">
+            <dt>Every team members will write some CSS</dt>
+            <dd class="small">Everyone knows at least some CSS. We need a system that's easy to explain so we know what to write and where.</dd>
+            <dd class="small">Skill levels vary so we need a system that can separate out the difficult bits.</dd>
+        </dl>
+
+    </section>
+
+    <section>
+        <h2>Without ITCSS</h2>
+        <p>When we write CSS, we usually start at the top of the design. This is very human-readable, but the browser doesn't care. Should we?</p>
+        <p class="fragment">It also creates a new problem.</p>
+    </section>
+
+    <section>
+
+        <p>Imagine that this box is the compiled CSS. Line 0 is at the top, line ~3000 is at the bottom.</p>
+
+        <div class="flip-book" id="flipbook">
+            <img src="./bloat-1.png" alt="Empty sheet, nothing written.">
+            <img src="./bloat-2.png" alt="We write some styles at the top. So far, so good.">
+            <img src="./bloat-3.png" alt="The next thing we write goes under the first. No problem" class="fragment">
+            <img src="./bloat-4.png" alt="We keep writing, but somethings conflicts. We need to go back and change it." class="fragment">
+            <img src="./bloat-5.png" alt="OK ... we're doing fine again." class="fragment">
+            <img src="./bloat-6.png" alt="We write something else and it conflicts higher up. Fixing that conflicts with something else!" class="fragment">
+        </div>
+
+        <p id="flipbook-alt"></p>
+
+    </section>
+
+</section>
+
+<section id="questions">
+    <h1>Any questions?</h1>
+</section>
+
+    </div>
+</div>
+
+
+
+<script src="../reveal/lib/js/head.min.js"></script>
+<script src="../reveal/js/reveal.js"></script>
+<script>
+Reveal.configure({
+    pdfSeparateFragments: false,
+    pdfMaxPagesPerSlide: 1
+});
+Reveal.initialize({
+    dependencies: [
+        // Speaker notes.
+        {
+            src: "../reveal/plugin/notes/notes.js",
+            async: true
+        },
+        // Syntax highlighting.
+        {
+            src: "../reveal/plugin/highlight/highlight.js",
+            async: true,
+            callback: function () {
+                hljs.initHighlightingOnLoad();
+            }
+        },
+        // PDF printing.
+        {
+            src: "../reveal/plugin/print-pdf/print-pdf.js",
+            async: true
+        }
+    ]
+});
+
+Reveal.on("slidechanged", ({ previousSlide, currentSlide, indexh, indexv }) => {
+    console.log({ previousSlide, currentSlide, indexh, indexv });
+});
+</script>
+
+</body>
+</html>
