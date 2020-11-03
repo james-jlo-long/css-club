@@ -6,14 +6,13 @@
 <meta name="viewport" content="initial-scale=1, width=device-width">
 <title>ITCSS</title>
 
-<link rel="stylesheet" href="../reveal/css/reveal.css">
-<link rel="stylesheet" href="../reveal/css/theme/black.css">
-<link rel="stylesheet" href="../reveal/lib/css/zenburn.css">
-<!-- <link rel="stylesheet" href="./custom.css"> -->
-<link rel="stylesheet" href="../reveal/css/print/pdf.css" media="print">
+<link rel="stylesheet" href="../reveal/dist/reveal.css">
+<link rel="stylesheet" href="../reveal/dist/theme/black.css">
+<link rel="stylesheet" href="../reveal/plugin/highlight/zenburn.css">
 <style>
 .small { font-size: 0.8em }
-.flip-book { position: relative;; }
+.flip-book { position: relative; }
+.flip-book > img { margin: 0; }
 .flip-book > .fragment { position: absolute; left: 50%; top: 0; transform: translateX(-50%); }
 </style>
 
@@ -94,18 +93,33 @@
 
     <section>
 
-        <p>Imagine that this box is the compiled CSS. Line 0 is at the top, line ~3000 is at the bottom.</p>
+        <p>Imagine that this box is the compiled CSS.</p>
 
         <div class="flip-book" id="flipbook">
             <img src="./bloat-1.png" alt="Empty sheet, nothing written.">
-            <img src="./bloat-2.png" alt="We write some styles at the top. So far, so good.">
+            <img src="./bloat-2.png" alt="We write some styles at the top. So far, so good." class="fragment">
             <img src="./bloat-3.png" alt="The next thing we write goes under the first. No problem" class="fragment">
             <img src="./bloat-4.png" alt="We keep writing, but somethings conflicts. We need to go back and change it." class="fragment">
             <img src="./bloat-5.png" alt="OK ... we're doing fine again." class="fragment">
             <img src="./bloat-6.png" alt="We write something else and it conflicts higher up. Fixing that conflicts with something else!" class="fragment">
         </div>
 
-        <p id="flipbook-alt"></p>
+        <p id="flipbook-alt" class="small"></p>
+
+    </section>
+
+    <section>
+        <p>This is how we end up with CSS bloat. The style sheet's a mess and we don't know. We have CSS chaos.</p>
+    </section>
+
+    <section>
+
+        <h3>Causes of CSS Chaos:</h3>
+        <ul>
+            <li>Mismanaged CSS specificity.</li>
+            <li>Writing CSS in an impractical order.</li>
+            <li>Writing styles that are too opinionated too early on.</li>
+        </ul>
 
     </section>
 
@@ -120,38 +134,23 @@
 
 
 
-<script src="../reveal/lib/js/head.min.js"></script>
-<script src="../reveal/js/reveal.js"></script>
-<script>
-Reveal.configure({
-    pdfSeparateFragments: false,
-    pdfMaxPagesPerSlide: 1
-});
+<script type="module">
+import Reveal from "../reveal/dist/reveal.esm.js";
+import Notes from "../reveal/plugin/notes/notes.esm.js";
+import Highlight from "../reveal/plugin/highlight/highlight.esm.js";
+
 Reveal.initialize({
-    dependencies: [
-        // Speaker notes.
-        {
-            src: "../reveal/plugin/notes/notes.js",
-            async: true
-        },
-        // Syntax highlighting.
-        {
-            src: "../reveal/plugin/highlight/highlight.js",
-            async: true,
-            callback: function () {
-                hljs.initHighlightingOnLoad();
-            }
-        },
-        // PDF printing.
-        {
-            src: "../reveal/plugin/print-pdf/print-pdf.js",
-            async: true
-        }
-    ]
+    plugins: [ Notes, Highlight ]
 });
 
-Reveal.on("slidechanged", ({ previousSlide, currentSlide, indexh, indexv }) => {
-    console.log({ previousSlide, currentSlide, indexh, indexv });
+const flipbook = document.getElementById("flipbook");
+const alt = document.getElementById("flipbook-alt");
+Reveal.on("fragmentshown", ({ fragment }) => {
+
+    if (flipbook.contains(fragment)) {
+        alt.textContent = fragment.alt;
+    }
+
 });
 </script>
 

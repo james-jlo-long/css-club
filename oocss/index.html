@@ -6,11 +6,9 @@
 <meta name="viewport" content="initial-scale=1, width=device-width">
 <title>OOCSS</title>
 
-<link rel="stylesheet" href="../reveal/css/reveal.css">
-<link rel="stylesheet" href="../reveal/css/theme/black.css">
-<link rel="stylesheet" href="../reveal/lib/css/zenburn.css">
-<!-- <link rel="stylesheet" href="./custom.css"> -->
-<link rel="stylesheet" href="../reveal/css/print/pdf.css" media="print">
+<link rel="stylesheet" href="../reveal/dist/reveal.css">
+<link rel="stylesheet" href="../reveal/dist/theme/black.css">
+<link rel="stylesheet" href="../reveal/plugin/highlight/zenburn.css">
 <style>
 .cols {
     display: flex;
@@ -923,34 +921,13 @@ grep -o 'font-family' /path/to/compiled.css | wc -l
 
 
 
-<script src="../reveal/lib/js/head.min.js"></script>
-<script src="../reveal/js/reveal.js"></script>
-<script>
-Reveal.configure({
-    pdfSeparateFragments: false,
-    pdfMaxPagesPerSlide: 1
-});
+<script type="module">
+import Reveal from "../reveal/dist/reveal.esm.js";
+import Notes from "../reveal/plugin/notes/notes.esm.js";
+import Highlight from "../reveal/plugin/highlight/highlight.esm.js";
+
 Reveal.initialize({
-    dependencies: [
-        // Speaker notes.
-        {
-            src: "../reveal/plugin/notes/notes.js",
-            async: true
-        },
-        // Syntax highlighting.
-        {
-            src: "../reveal/plugin/highlight/highlight.js",
-            async: true,
-            callback: function () {
-                hljs.initHighlightingOnLoad();
-            }
-        },
-        // PDF printing.
-        {
-            src: "../reveal/plugin/print-pdf/print-pdf.js",
-            async: true
-        }
-    ]
+    plugins: [ Notes, Highlight ]
 });
 </script>
 
