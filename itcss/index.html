@@ -31,6 +31,7 @@
         <p>This will be much more theory than code.</p>
         <p>Stands for Inverted Triangle Cascading Style Sheets.</p>
         <p>Anyone ever heard of it?</p>
+        <p>ITCSS is more of a framework than specific rules.</p>
     </aside>
 
 </section>
@@ -38,7 +39,12 @@
 <section>
 
     <section>
+        <h2>Problems</h2>
+    </section>
+
+    <section>
         <h2>Problems with CSS</h2>
+        <p>CSS can seem quirky.</p>
     </section>
 
     <section>
@@ -64,6 +70,7 @@
 
     <section>
         <h2>Problems with Developers</h2>
+        <p>Let's face it, we're not perfect.</p>
     </section>
 
     <section>
@@ -87,7 +94,8 @@
 
     <section>
         <h2>Without ITCSS</h2>
-        <p>When we write CSS, we usually start at the top of the design. This is very human-readable, but the browser doesn't care. Should we?</p>
+        <p>When we write CSS, we usually start at the top of the design.</p>
+        <p class="fragment">This is very human-readable, but the browser doesn't work like that so why should we?</p>
         <p class="fragment">It also creates a new problem.</p>
     </section>
 
@@ -109,17 +117,288 @@
     </section>
 
     <section>
-        <p>This is how we end up with CSS bloat. The style sheet's a mess and we don't know. We have CSS chaos.</p>
+        <p>This is how we end up with CSS bloat. The style sheet's a mess and we don't know what anything does or where anything is.</p>
+        <p class="fragment">We have CSS chaos.</p>
     </section>
 
     <section>
 
         <h3>Causes of CSS Chaos:</h3>
         <ul>
-            <li>Mismanaged CSS specificity.</li>
-            <li>Writing CSS in an impractical order.</li>
-            <li>Writing styles that are too opinionated too early on.</li>
+            <li class="fragment">Mismanaged CSS specificity.</li>
+            <li class="fragment">Writing CSS in an impractical order.</li>
+            <li class="fragment">Writing styles that are too opinionated too early on.</li>
         </ul>
+
+    </section>
+
+</section>
+
+<section>
+
+    <section>
+        <h2>Specificity</h2>
+    </section>
+
+    <section>
+
+        <p>CSS selectors have strength that can determine which rules are applied. More complicated selectors have a higher strength or specificity.</p>
+        <p class="fragment">When we write, we should take specificity into account. Because we usually write CSS in the order of the design, the specificity is all over the place.</p>
+
+        <pre class="fragment"><code class="css" data-trim>
+body { }                /* 0, 0, 0, 1 */
+a { }                   /* 0, 0, 0, 1 */
+.class-1 { }            /* 0, 0, 1, 0 */
+#id { }                 /* 0, 1, 0, 0 */
+.class-2 { }            /* 0, 0, 1, 0 */
+input[type="text"] { }  /* 0, 0, 1, 1 */
+button { }              /* 0, 0, 0, 1 */
+        </code></pre>
+
+    </section>
+
+    <section>
+
+        <p>Because specificity is represented by numbers, we can plot them <a href="https://jonassebastianohlsson.com/specificity-graph/" target="_blank" rel="noreferrer noopener">on a graph</a></p>
+        <img src="./specificity-graph.png" alt="A graph of CSS specificity">
+
+        <aside class="notes">
+            <p>This shows specificity against location. Line 0 would be on the left.</p>
+            <p>This is the selectors on the previous screen.</p>
+        </aside>
+
+    </section>
+
+    <section>
+        <p>If we want to add anything, we usually add it to the end.</p>
+        <p class="fragment">If we have a conflict, we either need a higher specificity or we have to do horrible things with <code>!important</code>.</p>
+        <p class="fragment">... or we have to re-write something, but let's be honest - that never happens.</p>
+    </section>
+
+    <section>
+
+        <p>A better solution would be to know that specificity always trends upwards.</p>
+        <img src="./specificity-graph-desired.png" alt="A graph of ordered CSS specificity">
+        <p class="fragment">Now we know where to put new styles if we want to add anything.</p>
+
+    </section>
+
+    <section>
+
+        <p>We can take this a step further and label these sections so we have a better idea of what to put where.</p>
+        <img src="./specificity-graph-desired-label.png" alt="A graph of ordered CSS specificity with labels">
+
+    </section>
+
+    <section>
+
+        <table class="small">
+            <tbody>
+                <tr>
+                    <th scope="row">Generic</th>
+                    <td>resets/normalise. Widely available but low specificity. These are probably identical across multiple projects.</td>
+                </tr>
+                <tr>
+                    <th scope="row">Elements</th>
+                    <td>Styles HTML elements such as <code>&lt;a&gt;</code> or <code>&lt;h1&gt;</code> without a class on them.</td>
+                </tr>
+                <tr>
+                    <th scope="row">Objects</th>
+                    <td>First layer where we add some classes. Structured styles, layout and simple rules that position other things</td>
+                </tr>
+                <tr>
+                    <th scope="row">Components</th>
+                    <td>This is the UI and usually the biggest part of the style sheet. We add the layer that users would think of when we say "the styles" here.</td>
+                </tr>
+                <tr>
+                    <th scope="row">Utilities</th>
+                    <td>Hacks or simple changes. This is the only layer where we can use <code>!important</code>.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <aside class="notes">
+            <p>In OOCSS, "structure" and "container" would go in "Objects", "skin" and "content" would go in "Components".</p>
+            <p>The folders can have different names like "Modules" and "Surgical".</p>
+        </aside>
+
+    </section>
+
+</section>
+
+<section>
+
+    <section>
+        <h2>The Inverted Triangle</h2>
+    </section>
+
+    <section>
+
+        <p>This triangle represents the compiled style sheet, like the rectangle earlier.</p>
+
+        <div class="flip-book" id="inverted">
+            <img src="./it-1.png" alt="This triangle also represents the CSS document like before. Line 0 is at the top and line 3000 at the bottom.">
+            <img src="./it-2.png" alt="Specificity should increase as we go down the document." class="fragment">
+            <img src="./it-3.png" alt="As that happens, each line becomes more and more explicit or opinionated." class="fragment">
+            <img src="./it-4.png" alt="Crucially, the reach of each line goes down - each line affects fewer and fewer elements on the page." class="fragment">
+            <img src="./it-5.png" alt="We can divide the style sheet back into sections like we did the with the graph and you can see how each layer interacts." class="fragment">
+        </div>
+
+        <p id="inverted-alt" class="small"></p>
+
+    </section>
+
+    <section>
+
+        <p>Whenever you add new styles to the page, ask yourself how opinionated the style is.</p>
+        <p class="fragment">If it's very opinionated then it needs to be very explicit, so the specificity should be higher and the style should be lower down in the style sheet.</p>
+        <p class="fragment">If the style should reach a lot of elements then it needs a low specificity so it shouldn't be very opinionated.</p>
+        <p class="fragment">If you solve 2 sides of the triangle, the third one will be solved for you.</p>
+
+        <aside class="notes">
+            <p>"Opinionated" means that it's less generic. For example if only 1 anchor on the page is red, you wouldn't put color:red on all anchors.</p>
+        </aside>
+
+    </section>
+
+    <section>
+
+        <table class="small">
+            <tbody>
+                <tr>
+                    <th scope="row">Generic</th>
+                    <td>
+                        Should have a low specificity and low explicitness so it can reach a lot of elements.
+                        <br>Examples include styles like <code>* { margin: 0 }</code>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">Elements</th>
+                    <td>
+                        Needs to reach specific elements - <code>a</code> only reaches <code>&lt;a&gt;</code> elements, for example.
+                        <br>It has a naturally higher specificity so it can be a little more opinionated.
+                        <br>For example, it can define the <code>font-size</code> for every <code>&lt;h1&gt;</code> element.
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">Objects</th>
+                    <td>
+                        Built from classes so have an even higher specificity than elements.
+                        <br>They lay out elements or reset things like list styles.
+                        <br>They're a little more opinionated but still should be very easy to override if we need to.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </section>
+    <section>
+
+        <table class="small">
+            <tbody>
+                <tr>
+                    <th scope="row">Components</th>
+                    <td>
+                        These describe a module and there are probably only 1 or 2 on the page at a time.
+                        <br>Since these define the "style" of the website, they're very opinionated - they include things like <code>color</code>.
+                        <br>As a result, they need a higher specificity (or at least be after the objects).
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">Utilities</th>
+                    <td>
+                        These surgical classes will only affect 1 element on the page, if that.
+                        <br>Their reach is very limited but we need them to be highly opinionated and prevent other things changing them.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </section>
+
+</section>
+
+<section>
+
+    <section>
+        <h2>The Sculptor Metaphor</h2>
+    </section>
+
+    <section>
+
+        <p>A good way of thinking about this is to imagine a sculptor carving a statue.</p>
+
+        <ol>
+            <li class="fragment">They get a large slab of marble from a quarry, blown our of the side of a cliff using explosives.</li>
+            <li class="fragment">The block is taken to a stone mill who'd make it a sensible shape, like a cuboid, using heavy-duty, industrial tools.</li>
+            <li class="fragment">The sculptor takes a large hammer and chisel to get the basic shape of the statue.</li>
+            <li class="fragment">As the sculptor wants more detail, they use smaller and smaller tools and get more precise.</li>
+        </ol>
+
+    </section>
+
+    <section>
+
+        <p>A sculptor wouldn't go up to a cliff with a small hammer and chisel to carve out the perfect finger before moving onto the perfect hand.</p>
+        <p>That would be a very weird way of working and if anything went wrong, they'd have to start again.</p>
+        <p class="fragment">In the same way, we shouldn't build CSS like that.</p>
+
+    </section>
+
+</section>
+
+<section>
+
+    <section>
+        <h2>Extending the Triangle</h2>
+    </section>
+
+    <section>
+        <p>The Inverted Triangle is designed to be extended. Compare the specificity, explicitness and reach of any layer you want and add it to the appropriate place.</p>
+    </section>
+
+    <section>
+
+        <table class="small">
+            <tbody>
+                <tr>
+                    <th scope="row">Variables</th>
+                    <td>Preprocessor variables that can reach every element.</td>
+                </tr>
+                <tr>
+                    <th scope="row">Mixins</th>
+                    <td>These may use the variables, so they're more specific even though they're not creating any CSS.</td>
+                </tr>
+                <tr>
+                    <th scope="row">Generic</th>
+                    <td>General styles.</td>
+                </tr>
+                <tr>
+                    <th scope="row">Elements</th>
+                    <td>Style elements generically.</td>
+                </tr>
+                <tr>
+                    <th scope="row">Objects</th>
+                    <td>Help layout the page.</td>
+                </tr>
+                <tr>
+                    <th scope="row">Components</th>
+                    <td>The main modules that users see.</td>
+                </tr>
+                <tr>
+                    <th scope="row">WYSIWYG</th>
+                    <td>Because the client will want to change parts of the page but won't want to use complicated markup like classes, these are more specific than either elements or components.</td>
+                </tr>
+                <tr>
+                    <th scope="row">Utilities</th>
+                    <td>Overrides and hacks, as we need them.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <aside class="notes">
+            <p>If we wanted to add something like different themes (such as a dark mode), they would be more opinionated than components so we'd probably want that layer between the Components and Utilities.</p>
+        </aside>
 
     </section>
 
@@ -144,11 +423,17 @@ Reveal.initialize({
 });
 
 const flipbook = document.getElementById("flipbook");
-const alt = document.getElementById("flipbook-alt");
+const flipbookAlt = document.getElementById("flipbook-alt");
+const inverted = document.getElementById("inverted");
+const invertedAlt = document.getElementById("inverted-alt");
 Reveal.on("fragmentshown", ({ fragment }) => {
 
     if (flipbook.contains(fragment)) {
-        alt.textContent = fragment.alt;
+        flipbookAlt.textContent = fragment.alt;
+    }
+
+    if (inverted.contains(fragment)) {
+        invertedAlt.textContent = fragment.alt;
     }
 
 });
